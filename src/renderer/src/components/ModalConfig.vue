@@ -1,5 +1,5 @@
 <template>
-  <div class="pixel-modal" v-if="showModal">
+  <div class="pixel-modal">
     <div class="pixel-box">
       <h3>Opções</h3>
       <label for="musicVolume">Volume da música:</label>
@@ -16,9 +16,6 @@
 <script>
 export default {
   name: 'ModalConfig',
-  props: {
-    showModal: Boolean
-  },
   data() {
     return {
       musicVolume: 1,
@@ -28,6 +25,7 @@ export default {
   mounted() {
     this.musicVolume = parseFloat(localStorage.getItem('musicVolume') || 1)
     this.soundVolume = parseFloat(localStorage.getItem('soundVolume') || 1)
+
     this.updateMusicVolume()
     this.updateSoundVolume()
   },

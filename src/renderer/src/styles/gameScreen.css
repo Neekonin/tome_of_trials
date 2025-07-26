@@ -1,7 +1,7 @@
 #card-status-player {
   position: fixed;
   top: 25%;
-  left: 30%;
+  left: 25%;
 }
 
 .fade-overlay {
@@ -106,4 +106,14 @@
   width: 90%;
   box-shadow: 0 0 10px #000;
   z-index: 999;
+}
+
+.game-screen-background {
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../assets/img/game/bg_tome_of_trials.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
 }

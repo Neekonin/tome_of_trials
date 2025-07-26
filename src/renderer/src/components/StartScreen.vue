@@ -1,4 +1,5 @@
 <template>
+  <!-- Tela Preta -->
   <div class="text-center mt-4" id="start-screen">
     <div class="logo-container-start-sreen">
       <img src="/src/assets/img/game/logo_tome_of_trials_2.png" alt="Tome of Trials Logo" style="max-width: 300px; image-rendering: pixelated;" />
@@ -6,6 +7,9 @@
     <input class="form-control mb-3" v-model="name" placeholder="Digite seu nome" type="text" />
     <button class="btn btn-primary" @click="confirmStartGame">Iniciar Jogo</button>
   </div>
+
+  <button class="btn btn-secondary" @click="goBack">Voltar</button>
+
   <div class="video-background-container">
     <video autoplay muted loop class="video-background">
       <source src="/src/assets/videos/game/background_menu.mp4" type="video/mp4">
@@ -18,7 +22,8 @@ export default {
   name: 'StartScreen',
   data() {
     return {
-      name: ''
+      name: '',
+      showBlackScreen: false
     }
   },
   methods: {
@@ -32,7 +37,10 @@ export default {
 
       localStorage.setItem("playerName", name)
 
-      this.$emit('showScreen', name)
+      this.$router.push({ name: 'GameScreen' })
+    },
+    goBack() {
+      this.$router.push({ name: 'MainMenu' })
     }
   }
 }

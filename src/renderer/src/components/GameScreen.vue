@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <!-- Tela Preta -->
+  <div v-if="showBlackScreen" class="black-screen"></div>
+
+  <div class="game-screen-background">
     <div id="button-config" class="fixed-right">
       <!-- Botão para abrir o modal -->
       <div id="btn-back-menu"  @click="showWindowback()">
@@ -53,6 +56,11 @@ import { onMounted, ref } from 'vue'
 
 export default {
   name: 'GameScreen',
+  data() {
+    return{
+      showBlackScreen: false
+    }
+  },
   props: {
     name: String
   },
@@ -200,10 +208,6 @@ export default {
       backModal.classList.add("hidden");
     }
 
-    function backToMainMenu() {
-      
-    }
-
     onMounted(() => {
       showQuestion()
     })
@@ -216,6 +220,15 @@ export default {
       respond,
       showWindowback,
       hideBackmodal
+    }
+  },
+  methods: {
+    backToMainMenu() {
+      this.showBlackScreen = true
+
+      setTimeout(() => {
+        this.$router.push({ name: 'MainMenu' })
+      }, 3000)
     }
   }
 }

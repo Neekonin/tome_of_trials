@@ -22,7 +22,8 @@
     "@electron-toolkit/utils": "^4.0.0",
     "bootstrap": "^5.3.7",
     "electron-updater": "^6.3.9",
-    "vue-bootstrap-table": "^0.1.2"
+    "vue-bootstrap-table": "^0.1.2",
+    "vue-router": "^4.5.1"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config": "^2.0.0",

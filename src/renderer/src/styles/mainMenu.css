@@ -48,3 +48,13 @@
   height: auto;    /* Mantém a proporção original da imagem */
   display: block;  /* Remove espaços extras abaixo da imagem (útil para layout) */
 }
+
+.fade-enter-active {
+  transition: opacity 4s ease;
+}
+.fade-enter-from {
+  opacity: 0;
+}
+.fade-enter-to {
+  opacity: 1;
+}

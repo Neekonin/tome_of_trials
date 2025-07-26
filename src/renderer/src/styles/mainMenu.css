@@ -1,0 +1,50 @@
+.video-background-container {
+  /* Garante que o container ocupe 100% da tela */
+  position: fixed; /* Ou 'absolute' se o contêiner for pai de outro elemento */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; /* 'vh' significa 'viewport height' */
+  overflow: hidden;
+  z-index: -1;
+}
+
+.video-background {
+  /* Posiciona e dimensiona o vídeo dentro do container */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centraliza o vídeo */
+  min-width: 100%;
+  min-height: 100%;
+  
+  /* Garante que o vídeo preencha o espaço sem distorcer */
+  object-fit: cover;
+  
+  z-index: -1; /* Coloca o vídeo atrás do seu conteúdo */
+}
+
+/* Opcional: Adicione um overlay escuro sobre o vídeo para melhorar a legibilidade do texto */
+.video-background-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* Transparência de 40% */
+  z-index: -1;
+}
+
+.logo-container {
+  width: 20%; /* Exemplo de um contêiner com largura variável */
+  max-width: 800px; /* Limita a largura máxima do contêiner */
+  margin: 0 auto; /* Centraliza o contêiner */
+  padding: 10px;
+}
+
+.input-img-logo {
+  max-width: 100%; /* A imagem nunca será maior que seu contêiner pai */
+  height: auto;    /* Mantém a proporção original da imagem */
+  display: block;  /* Remove espaços extras abaixo da imagem (útil para layout) */
+}

@@ -1,0 +1,84 @@
+body {
+  background-repeat: repeat;
+  background-color: #000;
+  font-family: 'Press Start 2P', cursive;
+  color: #eee;
+  padding: 20px;
+  text-align: center;
+  /* opacity: 0; */
+  /* transition: opacity 3.0s ease-in-out; */
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+body.visible {
+  opacity: 1;
+}
+canvas {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+h1, h2, h3 {
+  color: #ffe700;
+  text-shadow: 2px 2px 0 #000;
+}
+button {
+  background-color: #333;
+  border: 3px solid #aa8800;
+  padding: 10px 20px;
+  color: #fff600;
+  font-family: 'Press Start 2P', cursive;
+  text-shadow: 1px 1px #000;
+  box-shadow: 2px 2px #000;
+  margin: 10px;
+}
+button:hover {
+  background-color: #555;
+  color: #ffff99;
+}
+#question {
+  background: #2b2b2b;
+  border: 2px solid #777;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 0.85rem;
+  text-shadow: 1px 1px #000;
+}
+.options button {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  background-color: #333;
+  border: 2px solid #999;
+}
+#hud {
+  margin-top: 20px;
+  background: #222;
+  padding: 10px;
+  border: 2px solid #555;
+  font-size: 0.8rem;
+}
+.logo-top {
+  position: absolute;
+  top: 20px;               /* distância do topo */
+  left: 50%;               /* começa no centro */
+  transform: translateX(-50%);  /* centraliza horizontalmente */
+  max-width: 500px;        /* opcional */
+  image-rendering: pixelated;
+  z-index: 999;           /* garante que fique visível acima */
+}
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.6s ease forwards;
+}
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}

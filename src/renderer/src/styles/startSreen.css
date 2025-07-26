@@ -1,0 +1,6 @@
+.logo-container-start-sreen {
+  width: 20%; /* Exemplo de um contêiner com largura variável */
+  max-width: 800px; /* Limita a largura máxima do contêiner */
+  margin: 0 auto; /* Centraliza o contêiner */
+  padding: 10px;
+}

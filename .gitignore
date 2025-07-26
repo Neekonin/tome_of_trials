@@ -1,0 +1,84 @@
+# Ficheiros e pastas gerados pelo Node
+node_modules/
+dist/
+dist-electron/
+dist-vue/
+out/
+.env
+.env.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.parcel-cache/
+.vuepress/dist/
+.temp/
+.DS_Store
+Thumbs.db
+.eslintcache
+
+# Ficheiros de build do Electron
+# Estes são os ficheiros e pastas gerados quando você empacota sua aplicação Electron.
+# Eles contêm os executáveis e recursos para diferentes plataformas.
+build/
+release/
+electron-builder-cache/
+*.asar
+
+# Logs de depuração e crash do Electron
+# Ficheiros de log que podem ser gerados pela sua aplicação Electron.
+logs/
+crash_dumps/
+
+# Ficheiros de configuração local
+# Ficheiros que podem ser gerados pelo seu IDE ou sistema operacional.
+.vscode/
+.idea/
+.history/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+ehthumbs.db
+Thumbs.db
+
+# Ficheiros temporários e de cache
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Ficheiros de teste e cobertura
+coverage/
+.nyc_output/
+
+# Ficheiros de dados de utilizador (se aplicável)
+# Se a sua aplicação Electron armazena dados de utilizador localmente,
+# adicione as pastas aqui para evitar que sejam versionadas.
+# Exemplo:
+# userData/
+
+# Ficheiros de configuração específicos do sistema operacional
+# Windows
+*.dll
+*.exe
+*.obj
+*.lib
+*.pdb
+*.exp
+*.ilk
+*.suo
+*.user
+*.aps
+*.ncb
+*.vcproj.*.user
+*.vcxproj.*.user
+*.filters
+*.opendb
+*.tlog
+*.lastbuildstate
+*.log
+*.ipch
+*.sdf
+

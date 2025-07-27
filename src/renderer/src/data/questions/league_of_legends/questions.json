@@ -1,0 +1,112 @@
+[
+  {
+    "question": "Qual campeão tem o título 'O Curador das Areias'?",
+    "alternatives": [
+      "Zilean",
+      "Nasus",
+      "Xerath",
+      "Azir"
+    ],
+    "correctQuestion": 3,
+    "difficulty": "Fácil"
+  },
+  {
+    "question": "Quem é o irmão de Yasuo?",
+    "alternatives": [
+      "Zed",
+      "Shen",
+      "Yone",
+      "Lee Sin"
+    ],
+    "correctQuestion": 2,
+    "difficulty": "Fácil"
+  },
+  {
+    "question": "Qual campeã dispara chamas com sua arma chamada Infernum?",
+    "alternatives": [
+      "Jinx",
+      "Aphelios",
+      "Samira",
+      "Senna"
+    ],
+    "correctQuestion": 1,
+    "difficulty": "Fácil"
+  },
+  {
+    "question": "Qual é o nome da ultimate da Lux?",
+    "alternatives": [
+      "Luz da Justiça",
+      "Explosão Prismática",
+      "Iluminar",
+      "Singularidade Brilhante"
+    ],
+    "correctQuestion": 1,
+    "difficulty": "Intermediária"
+  },
+  {
+    "question": "Quem é o pai da Vi no universo alternativo Arcane?",
+    "alternatives": [
+      "Silco",
+      "Vander",
+      "Jayce",
+      "Heimerdinger"
+    ],
+    "correctQuestion": 1,
+    "difficulty": "Intermediária"
+  },
+  {
+    "question": "Qual destes campeões NÃO é um yordle?",
+    "alternatives": [
+      "Teemo",
+      "Vex",
+      "Kennen",
+      "Zilean"
+    ],
+    "correctQuestion": 3,
+    "difficulty": "Intermediária"
+  },
+  {
+    "question": "Qual campeã tem um pet chamado Valor?",
+    "alternatives": [
+      "Quinn",
+      "Fiora",
+      "Riven",
+      "Kayle"
+    ],
+    "correctQuestion": 0,
+    "difficulty": "Difícil"
+  },
+  {
+    "question": "Quem é conhecido como 'O Kraken Rebelde'?",
+    "alternatives": [
+      "Pyke",
+      "Illaoi",
+      "Nautilus",
+      "Nilah"
+    ],
+    "correctQuestion": 3,
+    "difficulty": "Difícil"
+  },
+  {
+    "question": "Qual campeão usa o feitiço 'Devorar e Cuspir'?",
+    "alternatives": [
+      "Kog'Maw",
+      "Tahm Kench",
+      "Cho'Gath",
+      "Dr. Mundo"
+    ],
+    "correctQuestion": 1,
+    "difficulty": "Difícil"
+  },
+  {
+    "question": "Qual destes campeões é do Vazio?",
+    "alternatives": [
+      "Jhin",
+      "Rek'Sai",
+      "Zoe",
+      "Fiora"
+    ],
+    "correctQuestion": 1,
+    "difficulty": "Difícil"
+  }
+]

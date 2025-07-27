@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Porta dos Fundos",
+    "description": "Pula a pergunta atual",
+    "rarity": "common",
+    "image": "/src/assets/img/cards/back_door.png",
+    "immediate": false,
+    "effect": "skipQuestion"
+  },
+  {
+    "name": "Saco de Cristais",
+    "description": "Mostra a resposta correta mas com as letras embaralhadas",
+    "rarity": "rare",
+    "immediate": false,
+    "image": "/src/assets/img/cards/crazy_revalation.png",
+    "effect": "shuffleAnswer"
+  },
+  {
+    "name": "Saco de Cristais",
+    "description": "Ganha +100 Cristais imediatamente",
+    "rarity": "epic",
+    "immediate": false,
+    "image": "/src/assets/img/cards/bag_of_crystal.png",
+    "effect": "addCrystals"
+  },
+  {
+    "name": "Zero Absoluto",
+    "description": "Congela o tempo até responder",
+    "rarity": "legendary",
+    "immediate": false,
+    "image": "/src/assets/img/cards/zero_absolute.png",
+    "effect": "freezeTime"
+  }
+]

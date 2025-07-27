@@ -1,7 +1,7 @@
 #card-status-player {
   position: fixed;
-  top: 25%;
-  left: 25%;
+  top: 1%;
+  left: 1%;
 }
 
 .fade-overlay {
@@ -116,4 +116,152 @@
   background-repeat: no-repeat;
   background-position: center;
   image-rendering: pixelated;
+}
+
+.life-icon {
+  width: 32px;
+  height: 32px;
+  margin: 0 2px;
+  image-rendering: pixelated;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.pixel-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pixel-modal-box {
+  background: #1b1b1b;
+  color: #fff;
+  border: 4px solid #fff;
+  padding: 30px;
+  width: 320px;
+  font-family: 'Press Start 2P', sans-serif;
+  font-size: 12px;
+  text-align: center;
+  box-shadow: 0 0 20px #000;
+  image-rendering: pixelated;
+}
+
+.popup-text {
+  margin-bottom: 20px;
+}
+
+.popup-ok-btn {
+  padding: 6px 18px;
+  background: #444;
+  color: #fff;
+  border: 2px solid #fff;
+  cursor: pointer;
+  font-family: 'Press Start 2P', sans-serif;
+  font-size: 10px;
+}
+
+.popup-ok-btn:hover {
+  background: #666;
+}
+
+.pixel-modal-overlay-cards {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pixel-modal-box-cards {
+  background: #1b1b1b;
+  color: #fff;
+  border: 4px solid #fff;
+  padding: 30px;
+  font-family: 'Press Start 2P', sans-serif;
+  font-size: 35px;
+  text-align: center;
+  box-shadow: 0 0 20px #000;
+}
+
+.card-options {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.card-option {
+  background: #1e1e1e;
+  padding: 8px;
+  width: 350px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.card-option:hover {
+  transform: scale(1.05);
+}
+
+.card-image {
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+  margin-bottom: 8px;
+}
+
+.inventory-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  cursor: pointer;
+}
+
+.inventory-icon {
+  width: 60px;
+  image-rendering: pixelated;
+}
+
+.card-inventory-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 10, 10, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  padding-top: 40px;
+  z-index: 1000;
+}
+
+.card-thumbnail img {
+  width: 100px;
+  /* border: 2px solid white; */
+  cursor: pointer;
+}
+
+.selected-card-center {
+  margin-top: 40px;
+}
+
+.selected-card-img {
+  width: 250px;
+  /* border: 3px solid gold; */
 }

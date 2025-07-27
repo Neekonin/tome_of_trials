@@ -60,15 +60,13 @@ export default {
       menuSound.currentTime = 0
       menuSound.play().catch(() => {})
     }
-
-    // this.addSounds()
   },
   methods: {
     startGame() {
       this.$router.push({ name: 'StartScreen' })
     },
     continueGame() {
-      const name = localStorage.getItem('playerName') || 'Jogador'
+      const playerGameName = localStorage.getItem('playerName') || 'Jogador'
       this.$router.push({ name: 'GameScreen' })
     },
     openModalConfig() {

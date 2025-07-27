@@ -4,7 +4,7 @@
     <div class="logo-container-start-sreen">
       <img src="/src/assets/img/game/logo_tome_of_trials_2.png" alt="Tome of Trials Logo" style="max-width: 300px; image-rendering: pixelated;" />
     </div>
-    <input class="form-control mb-3" v-model="name" placeholder="Digite seu nome" type="text" />
+    <input class="form-control mb-3" v-model="playerName" placeholder="Digite seu nome" type="text" />
     <button class="btn btn-primary" @click="confirmStartGame">Iniciar Jogo</button>
   </div>
 
@@ -22,22 +22,27 @@ export default {
   name: 'StartScreen',
   data() {
     return {
-      name: '',
+      playerName: '',
       showBlackScreen: false
     }
   },
   methods: {
     confirmStartGame() {
-      const name = this.name.trim()
+      const playerNameTrimmed = this.playerName.trim()
 
-      if (!name) {
+      if (!playerNameTrimmed) {
         alert("Digite seu nome para começar!")
         return
       }
 
-      localStorage.setItem("playerName", name)
+      localStorage.setItem("playerName", playerNameTrimmed)
 
-      this.$router.push({ name: 'GameScreen' })
+      this.$router.push({ 
+        name: 'GameScreen',
+        query: { 
+          playerName: playerNameTrimmed
+        } 
+      })
     },
     goBack() {
       this.$router.push({ name: 'MainMenu' })

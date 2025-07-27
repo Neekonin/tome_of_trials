@@ -10,14 +10,15 @@ const routes = [
     component: MainMenu
   },
   {
-    path: '/game',
-    name: 'GameScreen',
-    component: GameScreen
-  },
-  {
     path: '/start',
     name: 'StartScreen',
     component: StartScreen
+  },
+  {
+    path: '/game',
+    name: 'GameScreen',
+    component: GameScreen,
+    props: route => ({ playerName: route.query.playerName || 'Jogador' })
   }
 ]
 

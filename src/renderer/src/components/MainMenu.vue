@@ -2,7 +2,7 @@
   <transition name="fade">
     <div v-if="visible" id="main-menu" class="d-flex flex-column justify-content-center align-items-center vh-100 text-white position-fixed top-0 start-0 w-100 h-100" style="z-index: 900;">
       <div class="logo-container">
-        <img src="/src/assets/img/game/logo_tome_of_trials_2.png" class="input-img-logo" alt="Tome of Trials Logo" />
+        <img src="/src/public/img/game/logo_tome_of_trials_2.png" class="input-img-logo" alt="Tome of Trials Logo" />
       </div>
       <button class="btn btn-menu btn-primary btn-lg mb-3" :disabled="!hasProgress" @click="playClickSound(); continueGame()" @mouseenter="playHoverSound">Continuar</button>
       <button class="btn btn-menu btn-success btn-lg mb-3" @click="playClickSound(); startGame()" @mouseenter="playHoverSound">Novo Jogo</button>
@@ -24,7 +24,7 @@
 
       <div class="video-background-container">
         <video autoplay muted loop class="video-background">
-          <source src="/src/assets/videos/game/background_menu.mp4" type="video/mp4">
+          <source src="/src/public/videos/game/background_menu.mp4" type="video/mp4">
         </video>
       </div>
     </div>

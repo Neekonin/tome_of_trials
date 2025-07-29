@@ -6,7 +6,7 @@
     <div id="button-config" class="fixed-right">
       <!-- Botão para abrir o modal -->
       <div id="btn-back-menu"  @click="showWindowback()">
-        <img src="/src/public/img/game/config.png" class="input-img-config" alt="Configurações">
+        <img src="/img/game/config.png" class="input-img-config" alt="Configurações">
       </div>
     </div>
     <!-- Modal personalizado em estilo pixel -->
@@ -31,10 +31,10 @@
             <hr/>
             <h6> Vidas:</h6>
             <div class="lives-container">
-              <img v-for="n in lifes" :key="n" src="/src/public/img/game/heart_life.png" alt="Vida" class="life-icon" />
+              <img v-for="n in lifes" :key="n" src="/img/game/heart_life.png" alt="Vida" class="life-icon" />
             </div>
             <hr/>
-            <h6><img src="/src/public/img/game/red_crystal.png" class="life-icon" alt="Cristais"> Cristais:</h6>
+            <h6><img src="/img/game/red_crystal.png" class="life-icon" alt="Cristais"> Cristais:</h6>
               <p class="fs-5 text-warning">{{ crystals }}</p>
           </div>
         </div>
@@ -104,7 +104,7 @@
 
 <!-- Botão de abrir o livro de cartas -->
 <div class="inventory-button" @click="showCardInventory = true">
-  <img src="/src/public/img/game/config.png" alt="Cartas" class="inventory-icon" />
+  <img src="/img/game/config.png" alt="Cartas" class="inventory-icon" />
 </div>
 <!-- Modal do Inventário -->
 <div v-if="showCardInventory" class="card-inventory-modal">

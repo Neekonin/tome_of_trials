@@ -111,7 +111,7 @@
 .game-screen-background {
   width: 100vw;
   height: 100vh;
-  background-image: url('../public/img/game/bg_tome_of_trials.png');
+  background-image: url('/img/game/bg_tome_of_trials.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

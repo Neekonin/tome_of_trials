@@ -167,7 +167,7 @@ export default {
   },
   methods: {
     async loadQuestions() {
-      const url = new URL('../data/questions/league_of_legends/questions.json', import.meta.url)
+      const url = new URL('/data/questions/league_of_legends/questions.json', import.meta.url)
       const response = await fetch(url)
 
       this.questionLibrary = await response.json()
@@ -177,11 +177,11 @@ export default {
       return [...arr].sort(() => Math.random() - 0.5)
     },
     async showCardSelection() {
-      const url = new URL('../data/cards/cards.json', import.meta.url)
+      const url = new URL('/data/cards/cards.json', import.meta.url)
       const response = await fetch(url)
       const allCards = await response.json()
 
-      this.availableCards = this.shuffle(allCards).slice(0, 4);
+      this.availableCards = this.shuffle(allCards).slice(0, 4);      
       this.showCardModal = true;
       this.cardSelectionPending = true;
     },

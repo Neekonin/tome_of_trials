@@ -3,7 +3,7 @@
     "name": "Porta dos Fundos",
     "description": "Pula a pergunta atual",
     "rarity": "common",
-    "image": "/img/cards/back_door.png",
+    "image": "./img/cards/back_door.png",
     "immediate": false,
     "effect": "skipQuestion"
   },
@@ -12,7 +12,7 @@
     "description": "Mostra a resposta correta mas com as letras embaralhadas",
     "rarity": "rare",
     "immediate": false,
-    "image": "/img/cards/crazy_revalation.png",
+    "image": "./img/cards/crazy_revalation.png",
     "effect": "shuffleAnswer"
   },
   {
@@ -20,7 +20,7 @@
     "description": "Ganha +100 Cristais imediatamente",
     "rarity": "epic",
     "immediate": false,
-    "image": "/img/cards/bag_of_crystal.png",
+    "image": "./img/cards/bag_of_crystal.png",
     "effect": "addCrystals"
   },
   {
@@ -28,7 +28,7 @@
     "description": "Congela o tempo até responder",
     "rarity": "legendary",
     "immediate": false,
-    "image": "/img/cards/zero_absolute.png",
+    "image": "./img/cards/zero_absolute.png",
     "effect": "freezeTime"
   }
 ]

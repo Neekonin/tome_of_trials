@@ -18,7 +18,7 @@ const routes = [
     path: '/game',
     name: 'GameScreen',
     component: GameScreen,
-    props: route => ({ playerName: route.query.playerName || 'Jogador' })
+    props: (route) => ({ playerName: route.query.playerName || 'Jogador' })
   }
 ]
 

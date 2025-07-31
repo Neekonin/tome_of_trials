@@ -1,3 +1,4 @@
+<!-- eslint-disable prettier/prettier -->
 <template>
   <!-- Tela Preta -->
   <div v-if="showBlackScreen" class="black-screen"></div>
@@ -5,59 +6,71 @@
   <div class="game-screen-background">
     <div id="button-config" class="fixed-right">
       <!-- Botão para abrir o modal -->
-      <div id="btn-back-menu"  @click="showWindowback()">
-        <img src="/img/game/config.png" class="input-img-config" alt="Configurações">
+      <div id="btn-back-menu" @click="showWindowback()">
+        <img src="/img/game/config.png" class="input-img-config" alt="Configurações" />
       </div>
     </div>
+
     <!-- Modal personalizado em estilo pixel -->
     <div id="back-modal" class="pixel-modal hidden">
       <div class="pixel-box">
         <p>Deseja realmente voltar ao menu?</p>
         <div class="pixel-buttons">
-          <button id="confirm-back"  @click="backToMainMenu()">Sim</button>
+          <button id="confirm-back" @click="backToMainMenu()">Sim</button>
           <button id="cancel-back" @click="hideBackmodal()">Não</button>
         </div>
       </div>
     </div>
-    <div class="row mt-4" id="game-area">
+
+    <div id="game-area" class="row mt-4">
       <div class="col-md-3">
-        <div class="card bg-dark text-white" id="card-status-player">
+        <div id="card-status-player" class="card bg-dark text-white">
           <div class="card-body">
             <h5 class="card-title">Jogador:</h5>
             <p class="card-text">{{ playerName }}</p>
-            <hr/>
-            <h6> Pontuação:</h6>
+            <hr />
+            <h6>Pontuação:</h6>
             <p class="fs-5 text-warning">{{ points }}</p>
-            <hr/>
-            <h6> Vidas:</h6>
+            <hr />
+            <h6>Vidas:</h6>
             <div class="lives-container">
-              <img v-for="n in lifes" :key="n" src="/img/game/heart_life.png" alt="Vida" class="life-icon" />
+              <img
+                v-for="n in lifes"
+                :key="n"
+                src="/img/game/heart_life.png"
+                alt="Vida"
+                class="life-icon"
+              />
             </div>
-            <hr/>
-            <h6><img src="/img/game/red_crystal.png" class="life-icon" alt="Cristais"> Cristais:</h6>
-              <p class="fs-5 text-warning">{{ crystals }}</p>
+            <hr />
+            <h6>
+              <img src="/img/game/red_crystal.png" class="life-icon" alt="Cristais" /> Cristais:
+            </h6>
+            <p class="fs-5 text-warning">{{ crystals }}</p>
           </div>
         </div>
       </div>
       <div class="col-md-9">
-        <div id="quiz-container" v-if="currentQuestion">
+        <div v-if="currentQuestion" id="questions-container">
           <div class="d-flex justify-content-end text-danger fw-bold fs-3 mb-3">
             ⏱️ Tempo: <span id="timer" class="ps-2">{{ timeLeft }}s</span>
           </div>
           <h4>{{ currentQuestion.question }}</h4>
-          <small class="text-muted">Dificuldade: {{ currentQuestion.difficulty }}</small><br><br>
-          <div v-for="(alt, i) in currentQuestion.alternatives" :key="i">
-            <button
-              class="btn w-100 mb-2"
-              :class="{
-                'btn-outline-primary': selectedAnswer !== i,
-                'btn-primary': selectedAnswer === i,
-                'disabled': answerConfirmed
-              }"
-              @click="selectAnswer(i)"
-            >
-              {{ alt }}
-            </button>
+          <small class="text-muted">Dificuldade: {{ currentQuestion.difficulty }}</small
+          ><br /><br />
+          <div v-for="(alt, i) in currentQuestion.alternatives" :key="i" :ref="el => answerRefs[i] = el">
+          <button
+            class="btn w-100 mb-2"
+            :class="{
+              'btn-outline-primary': selectedAnswer !== i,
+              'btn-primary': selectedAnswer === i,
+              disabled: answerConfirmed,
+              'floating-button': index >=1
+            }"
+            @click="selectAnswer(i)"
+          >
+            {{ alt }}
+          </button>
           </div>
         </div>
         <div id="judgment-container"></div>
@@ -70,18 +83,14 @@
     >
       Confirmar
     </button>
-    <button 
-      v-if="showNextButton" 
-      class="btn btn-success mt-3" 
-      @click="nextQuestion"
-    >
+    <button v-if="showNextButton" class="btn btn-success mt-3" @click="nextQuestion">
       Próxima Página
     </button>
   </div>
   <div v-if="popupMessage" class="pixel-modal-overlay">
     <div class="pixel-modal-box">
       <p class="popup-text">{{ popupMessage }}</p>
-      <button @click="closePopup" class="popup-ok-btn">OK</button>
+      <button class="popup-ok-btn" @click="closePopup">OK</button>
     </div>
   </div>
 
@@ -102,36 +111,36 @@
     </div>
   </div>
 
-<!-- Botão de abrir o livro de cartas -->
-<div class="inventory-button" @click="showCardInventory = true">
-  <img src="/img/game/config.png" alt="Cartas" class="inventory-icon" />
-</div>
-<!-- Modal do Inventário -->
-<div v-if="showCardInventory" class="card-inventory-modal">
-  <div class="card-inventory-background">
-    <h3 class="text-white text-center mb-3">Seu Grimório de Cartas</h3>
-    <div class="d-flex flex-wrap justify-content-center gap-3">
-      <div
-        v-for="(card, index) in storedCards"
-        :key="index"
-        class="card-thumbnail"
-        @click="selectStoredCard(index)"
-      >
-        <img :src="card.image" :alt="card.name" />
-      </div>
-    </div>
-
-    <!-- Exibir carta selecionada -->
-    <div v-if="selectedCard" class="selected-card-center text-center">
-      <img :src="selectedCard.image" alt="Carta Selecionada" class="selected-card-img" />
-      <h5 class="text-white mt-2">{{ selectedCard.name }}</h5>
-      <button class="btn btn-success mt-2" @click="useSelectedCard()">Usar</button>
-    </div>
-
-    <!-- Fechar -->
-    <button class="btn btn-danger mt-4" @click="closeInventory()">Fechar</button>
+  <!-- Botão de abrir o livro de cartas -->
+  <div class="inventory-button" @click="showCardInventory = true">
+    <img src="/img/game/config.png" alt="Cartas" class="inventory-icon" />
   </div>
-</div>
+  <!-- Modal do Inventário -->
+  <div v-if="showCardInventory" class="card-inventory-modal">
+    <div class="card-inventory-background">
+      <h3 class="text-white text-center mb-3">Seu Grimório de Cartas</h3>
+      <div class="d-flex flex-wrap justify-content-center gap-3">
+        <div
+          v-for="(card, index) in storedCards"
+          :key="index"
+          class="card-thumbnail"
+          @click="selectStoredCard(index)"
+        >
+          <img :src="card.image" :alt="card.name" />
+        </div>
+      </div>
+
+      <!-- Exibir carta selecionada -->
+      <div v-if="selectedCard" class="selected-card-center text-center">
+        <img :src="selectedCard.image" alt="Carta Selecionada" class="selected-card-img" />
+        <h5 class="text-white mt-2">{{ selectedCard.name }}</h5>
+        <button class="btn btn-success mt-2" @click="useSelectedCard()">Usar</button>
+      </div>
+
+      <!-- Fechar -->
+      <button class="btn btn-danger mt-4" @click="closeInventory()">Fechar</button>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -158,8 +167,9 @@ export default {
       selectedAnswer: null,
       showNextButton: false,
       answerConfirmed: false,
-      popupMessage: '',
-      storedCards: []
+      storedCards: [],
+      answerRefs: [],
+      enableFloating: false
     }
   },
   mounted() {
@@ -181,9 +191,9 @@ export default {
       const response = await fetch(url)
       const allCards = await response.json()
 
-      this.availableCards = this.shuffle(allCards).slice(0, 4);      
-      this.showCardModal = true;
-      this.cardSelectionPending = true;
+      this.availableCards = this.shuffle(allCards).slice(0, 4)
+      this.showCardModal = true
+      this.cardSelectionPending = true
     },
     selectCard(card) {
       if (card.immediate) {
@@ -193,9 +203,9 @@ export default {
         this.showPopup(`Você guardou a carta: ${card.name}`)
       }
 
-      this.showCardModal = false;
-      this.cardSelectionPending = false;
-      this.showQuestion();
+      this.showCardModal = false
+      this.cardSelectionPending = false
+      this.showQuestion()
     },
     applyCardEffect(card) {
       switch (card.effect) {
@@ -225,7 +235,7 @@ export default {
         this.selectedCard.effect()
       }
 
-      const idx = this.storedCards.findIndex(c => c === this.selectedCard)
+      const idx = this.storedCards.findIndex((c) => c === this.selectedCard)
       if (idx !== -1) {
         this.storedCards.splice(idx, 1)
       }
@@ -239,12 +249,15 @@ export default {
       this.showCardInventory = false
     },
     showPopup(msg) {
-      this.popupMessage = msg;
+      this.popupMessage = msg
     },
     closePopup() {
-      this.popupMessage = '';
+      this.popupMessage = ''
     },
     showQuestion() {
+      this.enableFloating = true
+      this.startFloatingButtons()
+
       if (this.index === 10 || this.index === 20) {
         this.showPopup('Iniciar julgamento (não implementado)')
         return
@@ -312,19 +325,19 @@ export default {
       this.showNextButton = false
 
       if (this.index > 0 && this.index % 5 === 0 && !this.cardSelectionPending) {
-        this.showCardSelection();
-        return;
+        this.showCardSelection()
+        return
       }
 
       this.showQuestion()
     },
     showWindowback() {
-      const backModal = document.getElementById("back-modal")
-      backModal.classList.remove("hidden")
+      const backModal = document.getElementById('back-modal')
+      backModal.classList.remove('hidden')
     },
     hideBackmodal() {
-      const backModal = document.getElementById("back-modal")
-      backModal.classList.add("hidden")
+      const backModal = document.getElementById('back-modal')
+      backModal.classList.add('hidden')
     },
     backToMainMenu() {
       clearInterval(this.interval)
@@ -335,11 +348,32 @@ export default {
         this.$router.push({ name: 'MainMenu' })
       }, 3000)
     },
-    showPopup(msg) {
-      this.popupMessage = msg
-    },
-    closePopup() {
-      this.popupMessage = ''
+    startFloatingButtons() {
+      this.$nextTick(() => {
+        this.answerRefs.forEach((btn) => {
+          if (!btn) return
+          let dx = 1 + Math.random()
+          let dy = 1 + Math.random()
+          let x = Math.random() * (window.innerWidth - 150)
+          let y = Math.random() * (window.innerHeight - 60)
+
+          const move = () => {
+            x += dx
+            y += dy
+
+            if (x <= 0 || x + 150 >= window.innerWidth) dx *= -1
+            if (y <= 0 || y + 60 >= window.innerHeight) dy *= -1
+
+            btn.style.position = 'absolute'
+            btn.style.left = x + 'px'
+            btn.style.top = y + 'px'
+
+            requestAnimationFrame(move)
+          }
+
+          move()
+        })
+      })
     }
   }
 }

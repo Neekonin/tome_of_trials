@@ -1,42 +1,42 @@
 [
   {
     "name": "Sábio Temporal",
-    "description": "Capaz de ler o tempo como se fosse uma página, o Sábio Temporal registra versões alternativas dos eventos e guarda cronogramas perdidos nas margens do infinito. Usa um grimório de areia viva e veste túnicas marcadas por glifos que mudam conforme a hora. Quando abre um livro, o passado e o futuro se sobrepõem — e a realidade hesita.",
+    "description": "Leitor do destino, manipulador de ciclos perdidos.",
     "passive": "Começa com 1 carta extra.",
     "power": "Revela a resposta correta 1x por jogo.",
     "image": "./img/character_class/sabio_temporal.png"
   },
   {
     "name": "Guardião da Biblioteca",
-    "description": "Sentinela ancestral da biblioteca arcana, o Guardião protege os corredores proibidos e os tomos selados com correntes encantadas. Envolto em mantos reforçados por runas defensivas, carrega livros mágicos acorrentados que sussurram segredos esquecidos. Imune à corrupção do conhecimento proibido, ele é o primeiro e último obstáculo entre os invasores e o saber absoluto.",
+    "description": "Defensor impenetrável dos salões do saber esquecido.",
     "passive": "Pode eliminar uma alternativa errada por fase.",
     "power": "Ignora penalidades 1x.",
     "image": "./img/character_class/guardiao_da_biblioteca.png"
   },
   {
     "name": "Narradora Eterna",
-    "description": "Encarregada de manter viva a memória da biblioteca, a Narradora Eterna caminha entre estantes que não terminam, recitando histórias que moldam o mundo. Seus olhos brilham com o reflexo de mil finais, e sua voz pode recontar ou reescrever o destino. Tudo que é narrado por ela, acontece. Ou já aconteceu. Ou está para acontecer.",
+    "description": "Aquela que escreve o fim... e também o recomeço.",
     "passive": "Alternativas embaralhadas para o inimigo.",
     "power": "Dificulta penalidades visuais.",
     "image": "./img/character_class/narradora_eterna.png"
   },
   {
     "name": "Escriba das Trevas",
-    "description": "Um mestre do oculto e dos pactos esquecidos, o Escriba das Trevas é responsável por escrever, selar e preservar magias que jamais deveriam existir. Usando uma pena feita de osso e tinta forjada com sangue amaldiçoado, ele registra feitiços proibidos, cria maldições e invocações que corrompem a própria realidade. Sempre envolto por névoa escura, com o rosto oculto sob um capuz ou uma máscara de crânio, sua presença perturba a luz ao redor. Cada símbolo que traça prende uma alma, destrava um segredo ou amaldiçoa um tolo. Seus pergaminhos não apenas contam histórias — eles definem destinos sombrios.",
+    "description": "Tece palavras proibidas que amaldiçoam quem ousa lê-las.",
     "passive": "Tempo extra por acerto seguido.",
     "power": "Dica sobre a resposta correta.",
     "image": "./img/character_class/escriba_das_trevas.png"
   },
   {
     "name": "Vinculadora de Pergaminhos",
-    "description": "Mestre das palavras e dos selos arcanos, a Vinculadora transforma ideias em contratos místicos. Seus pergaminhos são vivos, selados com sangue, tinta e intenção. Com sua fita encantada e dedos manchados de magia, ela pode selar entidades, prender feitiços e forjar pactos entre mundos. Toda promessa escrita por ela é impossível de quebrar.",
+    "description": "Mestre de pactos arcanos e vínculos selados a sangue.",
     "passive": "Ganha +1 carta a cada julgamento.",
     "power": "Duplica o efeito de uma carta.",
     "image": "./img/character_class/vinculadora_de_pergaminhos.png"
   },
   {
     "name": "Arquivista Arcana",
-    "description": "Encantadora e letal como um grimório selado, a Arquivista Arcana é uma jovem de beleza hipnotizante e olhos que brilham com runas vivas. Envolta em um vestido longo com decotes arcanos e bordados mágicos, ela domina os registros de feitiços caóticos e tomos instáveis com um toque delicado — mas preciso. Entre sorrisos e feitiçaria, ela manipula o conhecimento proibido como se fosse poesia, reorganizando realidades com o deslizar de seus dedos manchados de tinta encantada. Seu poder não está apenas nos livros — mas na forma como os faz obedecer.",
+    "description": "Sedutora do caos, transforma o conhecimento bruto em feitiço puro.",
     "passive": "Recebe +1 ponto por pergunta difícil.",
     "power": "Revela dica sobre o julgamento.",
     "image": "./img/character_class/arquivista_arcana.png"

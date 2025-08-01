@@ -50,7 +50,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-9">
+      <div id="backgrund-scroll" class="col-md-9">
         <div v-if="currentQuestion" id="questions-container">
           <div class="d-flex justify-content-end text-danger fw-bold fs-3 mb-3">
             ⏱️ Tempo: <span id="timer" class="ps-2">{{ timeLeft }}s</span>
@@ -58,19 +58,23 @@
           <h4>{{ currentQuestion.question }}</h4>
           <small class="text-muted">Dificuldade: {{ currentQuestion.difficulty }}</small
           ><br /><br />
-          <div v-for="(alt, i) in currentQuestion.alternatives" :key="i" :ref="el => answerRefs[i] = el">
-          <button
-            class="btn w-100 mb-2"
-            :class="{
-              'btn-outline-primary': selectedAnswer !== i,
-              'btn-primary': selectedAnswer === i,
-              disabled: answerConfirmed,
-              'floating-button': index >=1
-            }"
-            @click="selectAnswer(i)"
+          <div
+            v-for="(alt, i) in currentQuestion.alternatives"
+            :key="i"
+            :ref="(el) => (answerRefs[i] = el)"
           >
-            {{ alt }}
-          </button>
+            <button
+              class="btn w-100 mb-2"
+              :class="{
+                'btn-outline-primary': selectedAnswer !== i,
+                'btn-primary': selectedAnswer === i,
+                disabled: answerConfirmed,
+                'floating-button': enableFloating
+              }"
+              @click="selectAnswer(i)"
+            >
+              {{ alt }}
+            </button>
           </div>
         </div>
         <div id="judgment-container"></div>
@@ -255,8 +259,19 @@ export default {
       this.popupMessage = ''
     },
     showQuestion() {
-      this.enableFloating = true
-      this.startFloatingButtons()
+      // Limpa botões antigos do body
+      this.answerRefs.forEach((btn) => {
+        if (btn && btn.parentNode === document.body) {
+          document.body.removeChild(btn)
+        }
+      })
+
+      this.answerRefs = []
+
+      if (this.index >= 5 && this.index <= 10) {
+        this.enableFloating = true
+        this.startFloatingButtons()
+      }
 
       if (this.index === 10 || this.index === 20) {
         this.showPopup('Iniciar julgamento (não implementado)')
@@ -340,6 +355,15 @@ export default {
       backModal.classList.add('hidden')
     },
     backToMainMenu() {
+      // Limpa botões antigos do body
+      this.answerRefs.forEach((btn) => {
+        if (btn && btn.parentNode === document.body) {
+          document.body.removeChild(btn)
+        }
+      })
+
+      this.answerRefs = []
+
       clearInterval(this.interval)
 
       this.showBlackScreen = true
@@ -352,21 +376,26 @@ export default {
       this.$nextTick(() => {
         this.answerRefs.forEach((btn) => {
           if (!btn) return
+
+          // Remover do DOM original e mover para o body
+          btn.style.position = 'fixed'
+          btn.style.zIndex = 9999
+          document.body.appendChild(btn)
+
           let dx = 1 + Math.random()
           let dy = 1 + Math.random()
-          let x = Math.random() * (window.innerWidth - 150)
-          let y = Math.random() * (window.innerHeight - 60)
+          let x = Math.random() * (window.innerWidth - btn.offsetWidth)
+          let y = Math.random() * (window.innerHeight - btn.offsetHeight)
 
           const move = () => {
             x += dx
             y += dy
 
-            if (x <= 0 || x + 150 >= window.innerWidth) dx *= -1
-            if (y <= 0 || y + 60 >= window.innerHeight) dy *= -1
+            if (x <= 0 || x + btn.offsetWidth >= window.innerWidth) dx *= -1
+            if (y <= 0 || y + btn.offsetHeight >= window.innerHeight) dy *= -1
 
-            btn.style.position = 'absolute'
-            btn.style.left = x + 'px'
-            btn.style.top = y + 'px'
+            btn.style.left = `${x}px`
+            btn.style.top = `${y}px`
 
             requestAnimationFrame(move)
           }

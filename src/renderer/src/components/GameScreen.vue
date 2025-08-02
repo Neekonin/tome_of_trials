@@ -104,8 +104,8 @@
       <p>Escolha uma carta:</p>
       <div class="card-options">
         <div
-          v-for="(card, index) in availableCards"
-          :key="index"
+          v-for="(card, card_index) in availableCards"
+          :key="card_index"
           class="card-option"
           @click="selectCard(card)"
         >
@@ -119,16 +119,22 @@
   <div class="inventory-button" @click="showCardInventory = true">
     <img src="/img/game/config.png" alt="Cartas" class="inventory-icon" />
   </div>
+
+  <!-- Botões para testar Mecânmicas -->
+  <div class="buttons-tests">
+    <button class="btn btn-danger mt-4" @click="startFloatingButtons()">Testar Movimentação Caótica</button>
+  </div>
+
   <!-- Modal do Inventário -->
   <div v-if="showCardInventory" class="card-inventory-modal">
     <div class="card-inventory-background">
       <h3 class="text-white text-center mb-3">Seu Grimório de Cartas</h3>
       <div class="d-flex flex-wrap justify-content-center gap-3">
         <div
-          v-for="(card, index) in storedCards"
-          :key="index"
+          v-for="(card, card_index) in storedCards"
+          :key="card_index"
           class="card-thumbnail"
-          @click="selectStoredCard(index)"
+          @click="selectStoredCard(card_index)"
         >
           <img :src="card.image" :alt="card.name" />
         </div>
@@ -173,7 +179,8 @@ export default {
       answerConfirmed: false,
       storedCards: [],
       answerRefs: [],
-      enableFloating: false
+      enableFloating: false,
+      floatingAnimations: []
     }
   },
   mounted() {
@@ -373,17 +380,23 @@ export default {
       }, 3000)
     },
     startFloatingButtons() {
+      this.stopFloatingButtons()
+
       this.$nextTick(() => {
+        this.floatingAnimations = []
+
         this.answerRefs.forEach((btn) => {
           if (!btn) return
+
+          const speedMultiplier = this.getCurrentSpeedLevel?.() || 1.5
 
           // Remover do DOM original e mover para o body
           btn.style.position = 'fixed'
           btn.style.zIndex = 9999
           document.body.appendChild(btn)
 
-          let dx = 1 + Math.random()
-          let dy = 1 + Math.random()
+          let dx = (1 + Math.random()) * speedMultiplier
+          let dy = (1 + Math.random()) * speedMultiplier
           let x = Math.random() * (window.innerWidth - btn.offsetWidth)
           let y = Math.random() * (window.innerHeight - btn.offsetHeight)
 
@@ -397,12 +410,24 @@ export default {
             btn.style.left = `${x}px`
             btn.style.top = `${y}px`
 
-            requestAnimationFrame(move)
+            const id = requestAnimationFrame(move)
+            this.floatingAnimations.push(id)
           }
 
-          move()
+          const id = requestAnimationFrame(move)
+          this.floatingAnimations.push(id)
         })
       })
+    },
+    getCurrentSpeedLevel() {
+      if (this.index > 5) return 1.5
+      if (this.index > 10) return 2
+      if (this.index > 15) return 3
+      return 4
+    },
+    stopFloatingButtons() {
+      this.floatingAnimations.forEach((id) => cancelAnimationFrame(id))
+      this.floatingAnimations = []
     }
   }
 }

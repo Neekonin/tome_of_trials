@@ -50,16 +50,25 @@
           </div>
         </div>
       </div>
-      <div id="backgrund-scroll" class="col-md-9">
-        <div v-if="currentQuestion" id="questions-container">
+      <div id="backgrund-scroll" class="col-md-9 d-flex justify-content-center align-items-center">
+          <!-- Container de Perguntas com mecânicas -->
+          <div
+              v-if="currentQuestion"
+              id="questions-container"
+              :style="questionContainerStyle"
+            >
           <div class="d-flex justify-content-end text-danger fw-bold fs-3 mb-3">
             ⏱️ Tempo: <span id="timer" class="ps-2">{{ timeLeft }}s</span>
           </div>
-          <h4>{{ currentQuestion.question }}</h4>
+           <!-- Exibe a mecânica atual (opcional) -->
+          <div v-if="currentMechanic !== 'none'" class="mb-2 text-info">
+            <small>Mecânica: {{ currentMechanic }}</small>
+          </div>
+          <h4>{{ displayedQuestion }}</h4>
           <small class="text-muted">Dificuldade: {{ currentQuestion.difficulty }}</small
           ><br /><br />
           <div
-            v-for="(alt, i) in currentQuestion.alternatives"
+            v-for="(alt, i) in displayedAlternatives"
             :key="i"
             :ref="(el) => (answerRefs[i] = el)"
           >
@@ -122,7 +131,9 @@
 
   <!-- Botões para testar Mecânmicas -->
   <div class="buttons-tests">
-    <button class="btn btn-danger mt-4" @click="startFloatingButtons()">Testar Movimentação Caótica</button>
+    <button class="btn btn-danger mt-4" @click="startFloatingButtons()">Test movimentation Caotic</button>
+    <button class="btn btn-danger mt-4" @click="applyRotation(180)">Test rotation</button>
+    <button class="btn btn-danger mt-4" @click="applyRandomMechanic('reverse')">Test reverse</button>
   </div>
 
   <!-- Modal do Inventário -->
@@ -179,8 +190,58 @@ export default {
       answerConfirmed: false,
       storedCards: [],
       answerRefs: [],
+      mechanicsList: ['rotate', 'floating', 'none', 'reverse'],
+      // Mecânicas
+      currentMechanic: 'none',
+      // Floating
       enableFloating: false,
-      floatingAnimations: []
+      floatingAnimations: [],
+      // Rotate
+      rotationDegrees: 0,
+      // Reverse
+      reverseType: 'none'
+    }
+  },
+  computed: {
+    /**
+     * Aplica posicionamento e rotação se necessário (rotate ou floating)
+     */
+    questionContainerStyle() {
+      if (this.currentMechanic === 'rotate' || this.currentMechanic === 'floating') {
+        return {
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: `translate(-50%, -50%) rotate(${this.rotationDegrees}deg)`,
+          transformOrigin: 'center center',
+        }
+      }
+      return {}
+    },
+    /**
+     * Retorna o texto da pergunta, invertido se aplicável
+     */
+    displayedQuestion() {
+      if (!this.currentQuestion) return ''
+      if (this.reverseType === 'question' || this.reverseType === 'both') {
+        return this.reverseWords(this.currentQuestion.question)
+      }
+      return this.currentQuestion.question
+    },
+    /**
+     * Retorna lista de alternativas, invertendo palavras se aplicável
+     */
+    displayedAlternatives() {
+      if (!this.currentQuestion) return []
+      const alts = this.currentQuestion.alternatives.map(alt => {
+        if (['answers', 'both'].includes(this.reverseType)) {
+          // Se houver múltiplas palavras, inverte a ordem delas; se não, inverte caracteres
+          return alt.includes(' ') ? this.reverseWords(alt) : this.reverseChars(alt)
+        }
+        return alt
+      })
+      console.log('[DEBUG] displayedAlternatives:', this.reverseType, alts)
+      return alts
     }
   },
   mounted() {
@@ -194,9 +255,6 @@ export default {
       this.questionLibrary = await response.json()
       this.showQuestion()
     },
-    shuffle(arr) {
-      return [...arr].sort(() => Math.random() - 0.5)
-    },
     async showCardSelection() {
       const url = new URL('/data/cards/cards.json', import.meta.url)
       const response = await fetch(url)
@@ -205,6 +263,46 @@ export default {
       this.availableCards = this.shuffle(allCards).slice(0, 4)
       this.showCardModal = true
       this.cardSelectionPending = true
+    },
+    shuffle(arr) {
+      return [...arr].sort(() => Math.random() - 0.5)
+    },
+    applyRandomMechanic() {
+      // Reset de efeitos anteriores
+      this.rotationDegrees = 0
+      this.enableFloating = false
+      this.reverseType = 'none'
+      this.stopFloatingButtons()
+
+      // Sorteia uma mecânica
+      const i = Math.floor(Math.random() * this.mechanicsList.length)
+      const mech = this.mechanicsList[i]
+      this.currentMechanic = mech
+
+      // Aplica a mecânica sorteada
+      switch (mech) {
+        case 'rotate':
+          // Rotação aleatória entre 90, 180 ou 270 graus
+          const angles = [90, 180, 270]
+          const idx = Math.floor(Math.random() * angles.length)
+          this.applyRotation(angles[idx])
+          break
+        case 'floating':
+          // Ativa animações de flutuação nos botões
+          this.enableFloating = true
+          this.startFloatingButtons()
+          break
+        case 'reverse':
+          // Tipo de inversão: pergunta, respostas ou ambos
+          const types = ['question', 'answers', 'both']
+          this.reverseType = types[Math.floor(Math.random() * types.length)]
+          // Atualiza currentMechanic para refletir o tipo
+          this.currentMechanic = `reverse-${this.reverseType}`
+          break
+        default:
+          // Nenhuma mecânica
+          this.currentMechanic = 'none'
+      }
     },
     selectCard(card) {
       if (card.immediate) {
@@ -293,6 +391,14 @@ export default {
       this.currentQuestion = this.questionLibrary[this.index]
       this.timeLeft = 60
       this.startTimer()
+
+      this.applyRandomMechanic()
+      console.log(
+        '[DEBUG] Mecânica aplicada:',
+        this.currentMechanic,
+        'reverseType:',
+        this.reverseType
+      )
     },
     startTimer() {
       clearInterval(this.interval)
@@ -345,6 +451,8 @@ export default {
       this.selectedAnswer = null
       this.answerConfirmed = false
       this.showNextButton = false
+
+      this.applyRotation(0)
 
       if (this.index > 0 && this.index % 5 === 0 && !this.cardSelectionPending) {
         this.showCardSelection()
@@ -428,6 +536,18 @@ export default {
     stopFloatingButtons() {
       this.floatingAnimations.forEach((id) => cancelAnimationFrame(id))
       this.floatingAnimations = []
+    },
+    applyRotation(degrees) {
+      this.rotationDegrees = degrees
+    },
+    /**
+     * Inverte a ordem das palavras em uma string
+     */
+    reverseWords(text) {
+      return text.split(' ').reverse().join(' ')
+    },
+    reverseChars(text) {
+      return text.split('').reverse().join('')
     }
   }
 }

@@ -74,6 +74,7 @@
           >
             <button
               class="btn w-100 mb-2"
+              :disabled="answerConfirmed || (currentMechanic==='trap' && !disableCardsAllowed)"
               :class="{
                 'btn-outline-primary': selectedAnswer !== i,
                 'btn-primary': selectedAnswer === i,
@@ -190,7 +191,7 @@ export default {
       answerConfirmed: false,
       storedCards: [],
       answerRefs: [],
-      mechanicsList: ['rotate', 'floating', 'none', 'reverse'],
+      mechanicsList: ['rotate', 'floating', 'none', 'reverse', 'trap'],
       // Mecânicas
       currentMechanic: 'none',
       // Floating
@@ -199,7 +200,13 @@ export default {
       // Rotate
       rotationDegrees: 0,
       // Reverse
-      reverseType: 'none'
+      reverseType: 'none',
+      // Trap
+      nextTimePenalty: 0,
+      disableCardsNext: false,
+      disableCardsAllowed: true,
+      trapPositions: [],
+      trapPenalties: {}
     }
   },
   computed: {
@@ -272,36 +279,70 @@ export default {
       this.rotationDegrees = 0
       this.enableFloating = false
       this.reverseType = 'none'
+      this.trapPositions = []
+      this.trapPenalties = {}
+      this.nextTimePenalty = 0
+      this.disableCardsNext = false
+      this.disableCardsAllowed = true
+
       this.stopFloatingButtons()
 
       // Sorteia uma mecânica
-      const i = Math.floor(Math.random() * this.mechanicsList.length)
-      const mech = this.mechanicsList[i]
+      // const i = Math.floor(Math.random() * this.mechanicsList.length)
+      // const mech = this.mechanicsList[i]
+      // this.currentMechanic = mech
+
+      const mech = this.mechanicsList[Math.floor(Math.random() * this.mechanicsList.length)]
       this.currentMechanic = mech
 
       // Aplica a mecânica sorteada
       switch (mech) {
-        case 'rotate':
+        case 'rotate': {
           // Rotação aleatória entre 90, 180 ou 270 graus
           const angles = [90, 180, 270]
           const idx = Math.floor(Math.random() * angles.length)
           this.applyRotation(angles[idx])
           break
-        case 'floating':
+        }
+        case 'floating': {
           // Ativa animações de flutuação nos botões
           this.enableFloating = true
           this.startFloatingButtons()
           break
-        case 'reverse':
+        }
+        case 'reverse': {
           // Tipo de inversão: pergunta, respostas ou ambos
           const types = ['question', 'answers', 'both']
           this.reverseType = types[Math.floor(Math.random() * types.length)]
           // Atualiza currentMechanic para refletir o tipo
           this.currentMechanic = `reverse-${this.reverseType}`
           break
-        default:
+        }
+        case 'trap': {
+          const count = 3
+          const indices = [0, 1, 2, 3]
+          for (let i = indices.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1))
+            ;[indices[i], indices[j]] = [indices[j], indices[i]]
+          }
+          this.trapPositions = indices.slice(0, count)
+          const options = [
+            { type: 'lifes', value: -1 },
+            { type: 'crystals', value: -100 },
+            { type: 'card' },
+            { type: 'time', value: -10 },
+            { type: 'noCards' }
+          ]
+          this.trapPositions.forEach((pos) => {
+            const pen = options[Math.floor(Math.random() * options.length)]
+            this.trapPenalties[pos] = pen
+          })
+          break
+        }
+        default: {
           // Nenhuma mecânica
           this.currentMechanic = 'none'
+        }
       }
     },
     selectCard(card) {
@@ -364,6 +405,9 @@ export default {
       this.popupMessage = ''
     },
     showQuestion() {
+      this.timeLeft = this.defaultTime - this.nextTimePenalty
+      this.disableCardsAllowed = !this.disableCardsNext
+
       // Limpa botões antigos do body
       this.answerRefs.forEach((btn) => {
         if (btn && btn.parentNode === document.body) {
@@ -413,8 +457,7 @@ export default {
           if (this.lifes <= 0) {
             this.showPopup('Tempo esgotado! Fim de jogo.')
           } else {
-            this.index++
-            this.showQuestion()
+            this.showNextButton = true
           }
         }
       }, 1000)
@@ -429,6 +472,37 @@ export default {
 
       clearInterval(this.interval)
       this.answerConfirmed = true
+
+      if (this.currentMechanic === 'trap' && this.trapPositions.includes(this.selectedAnswer)) {
+        const pen = this.trapPenalties[this.selectedAnswer]
+        switch (pen.type) {
+          case 'lifes':
+            this.lifes += pen.value
+            alert('Perdeu 1 vida!')
+            break
+          case 'crystals':
+            this.crystals += pen.value
+            alert('Perdeu 100 cristais!')
+            break
+          case 'card':
+            if (this.storedCards.length) {
+              const idx = Math.floor(Math.random() * this.storedCards.length)
+              const lost = this.storedCards.splice(idx, 1)
+              alert(`Você perdeu a carta ${lost}!`)
+            } else {
+              alert('Sem cartas para perder!')
+            }
+            break
+          case 'time':
+            this.nextTimePenalty = Math.abs(pen.value)
+            alert('Você perdeu 10 segundos na próxima pergunta!')
+            break
+          case 'noCards':
+            this.disableCardsNext = true
+            alert('Não poderá usar cartas na próxima pergunta!')
+            break
+        }
+      }
 
       const correct = this.currentQuestion.correctQuestion
 
